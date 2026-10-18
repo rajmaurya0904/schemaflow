@@ -29,7 +29,13 @@ pip install -e ".[dev]"
 
 ## Limitations
 
-<!-- Honest and short: what it does NOT do, known gaps. -->
+- **No `$ref` resolution.** Schemas that reference other definitions (local or remote) are not followed; a `$ref` is emitted as `unknown`.
+- **Advanced keywords are ignored.** `additionalProperties`, `patternProperties`, `unevaluatedProperties`, and conditional subschemas (`if`/`then`/`else`) are not mapped to TypeScript types.
+- **No `allOf`/`anyOf`/`oneOf` composition.** Composed schemas are not inlined or intersected; only the `type` keyword is honored.
+- **No `enum` or `const` support.** These are not converted to literal union types.
+- **No `format` handling.** `format` annotations (e.g. `date-time`, `email`) are not mapped to branded or library types.
+- **No validation.** Schemaflow generates types; it does not validate data against the schema.
+- **Single-file input.** The CLI takes one schema file at a time; there is no project-wide or directory-based generation.
 
 ## Development
 
