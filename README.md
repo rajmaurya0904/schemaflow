@@ -2,7 +2,12 @@
 
 **A VS Code extension that generates TypeScript interfaces from JSON Schema files on save, with live preview.**
 
-<!-- THE PROBLEM: 2-3 concrete lines on the annoying thing this removes. -->
+You know the drill: the API team ships a new `schema.json`, and now you're hand-editing
+`types.ts` to match — renaming a field here, widening a union there, praying you caught
+every nested object. Every schema change becomes a small, error-prone transcription job,
+and the drift between the two files is only discovered when something breaks in
+production. Schemaflow turns that manual sync into a one-save action: the interfaces are
+generated from the schema, so they can't drift.
 
 ## Example
 
