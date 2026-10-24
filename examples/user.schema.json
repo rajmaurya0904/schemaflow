@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User",
+  "description": "An account in the system.",
+  "type": "object",
+  "required": ["id", "email", "role"],
+  "properties": {
+    "id": { "type": "integer", "minimum": 1 },
+    "email": { "type": "string", "format": "email" },
+    "name": { "type": ["string", "null"], "description": "Display name." },
+    "role": { "enum": ["admin", "editor", "viewer"] },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "address": { "$ref": "#/definitions/Address" },
+    "friends": { "type": "array", "items": { "$ref": "#" } },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "theme": { "enum": ["light", "dark"], "default": "light" },
+        "notifications": { "type": "boolean" }
+      }
+    },
+    "metadata": { "type": "object", "additionalProperties": { "type": "string" } },
+    "legacy-id": { "type": "string", "deprecated": true }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "required": ["street", "city"],
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "geo": { "type": "array", "items": [{ "type": "number" }, { "type": "number" }], "additionalItems": false }
+      }
+    }
+  }
+}
