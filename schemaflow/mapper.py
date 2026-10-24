@@ -205,7 +205,7 @@ class TypeBuilder:
         schema, document, pointer = target.schema, target.document, target.pointer
         header: list[str] = []
         if isinstance(schema, dict):
-            header = self._doc_comment(schema, "")
+            header = self._doc_comment(schema, "", titles=False)
         if isinstance(schema, dict) and self._is_plain_object(schema):
             members = self._object_members(schema, document, pointer, 1) or [
                 f"{INDENT}[key: string]: unknown;"
@@ -379,9 +379,9 @@ class TypeBuilder:
     # -- comments and warnings -------------------------------------------------------------
 
     @staticmethod
-    def _doc_comment(schema: dict[str, Any], pad: str) -> list[str]:
+    def _doc_comment(schema: dict[str, Any], pad: str, titles: bool = True) -> list[str]:
         text: list[str] = []
-        for key in ("description", "title"):
+        for key in ("description", "title") if titles else ("description",):
             value = schema.get(key)
             if isinstance(value, str) and value.strip():
                 text.append(value.strip())
