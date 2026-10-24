@@ -19,6 +19,7 @@ class Result:
     code: str
     warnings: list[str] = field(default_factory=list)
     names: list[str] = field(default_factory=list)
+    dependencies: list[Path] = field(default_factory=list)  # other files read via $ref
 
 
 def banner(source: str | None) -> str:
@@ -51,7 +52,7 @@ def generate(
     if options.banner:
         origin = source if source is not None else (path.name if path else None)
         code = banner(origin) + "\n" + body
-    return Result(code, builder.warnings, builder.declared)
+    return Result(code, builder.warnings, builder.declared, builder.resolver.loaded_paths())
 
 
 def generate_from_path(path: str | Path, options: Options | None = None) -> Result:

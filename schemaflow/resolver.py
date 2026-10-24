@@ -71,6 +71,10 @@ class Resolver:
     root: Document
     _cache: dict[Path, Document] = field(default_factory=dict)
 
+    def loaded_paths(self) -> list[Path]:
+        """Other files that were read while resolving references."""
+        return sorted(self._cache)
+
     def resolve(self, ref: Any, document: Document, pointer: str = "") -> Target:
         if not isinstance(ref, str):
             raise RefError("$ref must be a string", document.label, pointer)
